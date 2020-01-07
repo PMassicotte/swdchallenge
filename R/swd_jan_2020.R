@@ -5,7 +5,8 @@ library(ggpmthemes)
 
 theme_set(theme_poppins())
 
-files <- fs::dir_ls("data/raw/jan_2020/namesbystate/", glob = "*.TXT")
+files <-
+  fs::dir_ls("data/raw/jan_2020/namesbystate/", glob = "*.TXT")
 
 top_names <- function(file) {
   df <-
@@ -46,18 +47,33 @@ df_viz <- df %>%
 df_viz <- df_viz %>%
   distinct(sex, year, state, .keep_all = TRUE)
 
+df_viz %>%
+  as_tibble() %>%
+  distinct(name) %>%
+  pull(name)
+
 p <- df_viz %>%
   ggplot() +
   geom_sf(aes(fill = count), size = 0.1, color = "white") +
   geom_sf_text(
-    aes(label = glue::glue("{name}\n{count}")),
-    size = 1.75,
-    fontface = "plain",
+    aes(label = name),
+    size = 1.5,
+    fontface = "bold",
     family = "Open Sans"
+  ) +
+  geom_sf_text(
+    aes(label = count),
+    size = 1.25,
+    fontface = "plain",
+    family = "Open Sans",
+    vjust = 2.5
   ) +
   facet_grid(year ~ sex) +
   coord_sf() +
-  rcartocolor::scale_fill_carto_c(palette = "SunsetDark") +
+  rcartocolor::scale_fill_carto_c(
+    palette = "SunsetDark",
+    limits = c(20, 8700)
+  ) +
   guides(
     fill = guide_colorbar(
       barheight = unit(2.5, units = "mm"),
@@ -72,7 +88,11 @@ p <- df_viz %>%
     )
   ) +
   labs(
-    title = "Most popular names in USA over time",
+    title = "Most popular names in the US over time",
+    subtitle = str_wrap(
+      "The hexagons show the most popular name given at birth in each state. The number below each name indicates the number of babies with that name.",
+      75
+    ),
     caption = "SWD challenge: JAN 2020 (small multiples)\n Data: https://www.ssa.gov/OACT/babynames/limits.html\nVisualization: @philmassicotte"
   ) +
   theme(
@@ -98,11 +118,12 @@ p <- df_viz %>%
       size = 28,
       family = "IBM Plex"
     ),
-    plot.caption = element_text(color = "gray75", size = 8)
+    plot.caption = element_text(color = "gray75", size = 8),
+    plot.subtitle = element_text(color = "white", hjust = 0.5)
   )
 
-pdf_file <- here::here("graphs", "jan_2020.pdf")
-png_file <- here::here("graphs", "jan_2020.png")
+pdf_file <- here::here("graphs", "swd_jan_2020.pdf")
+png_file <- here::here("graphs", "swd_jan_2020.png")
 
 ggsave(pdf_file,
   device = cairo_pdf,
