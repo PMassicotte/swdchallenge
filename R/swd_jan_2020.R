@@ -69,7 +69,7 @@ p <- df_viz %>%
     vjust = 2.5
   ) +
   facet_grid(year ~ sex) +
-  coord_sf() +
+  coord_sf(crs = 3395) +
   rcartocolor::scale_fill_carto_c(
     palette = "SunsetDark",
     limits = c(20, 8700)
