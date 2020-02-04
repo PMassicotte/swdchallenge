@@ -32,7 +32,9 @@ df <- df %>%
   group_by(continent) %>%
   top_n(15, yearly_sunshine_duration) %>%
   ungroup() %>%
-  mutate(city = fct_reorder2(city, yearly_sunshine_duration, continent))
+  group_by(continent) %>%
+  arrange(yearly_sunshine_duration) %>%
+  ungroup()
 
 df <- df %>%
   group_nest(continent) %>%
@@ -46,8 +48,7 @@ df <- df %>%
   select(-continent, -data) %>%
   unnest(data2) %>%
   rowid_to_column() %>%
-  mutate(color = vapoRwave:::floralShoppe_palette[2:8][factor(continent)]) %>%
-  mutate(continent = fct_inorder(continent))
+  mutate(color = vapoRwave:::floralShoppe_palette[2:8][factor(continent)])
 
 df
 
@@ -113,12 +114,12 @@ df %>%
     )
   ) +
   labs(
-    title = "Sunniest cities in the world",
+    title = "Sunniest places in the world",
     subtitle = str_wrap(
-      "Do you have winter blues? These are the 15 sunniest cities by continent in terms of annual sunshine hours.",
+      "Do you have winter blues? These are the 15 sunniest places by region in terms of annual sunshine hours.",
       75
     ),
-    caption = "SWD challenge: FEB 2020 (barplot)\n Data Source: Wikipedia\nVisualization: @philmassicotte"
+    caption = "SWD challenge: FEB 2020 (barplot)\nData Source: Wikipedia (https://en.m.wikipedia.org/wiki/List_of_cities_by_sunshine_duration)\nVisualization: @philmassicotte"
   ) +
   theme(
     legend.position = "bottom",
@@ -147,7 +148,7 @@ df %>%
       hjust = 0.5,
       size = 20
     ),
-    plot.caption = element_text(color = "gray75", size = 8)
+    plot.caption = element_text(color = "gray75", size = 8, hjust = 0)
   )
 
 pdf_file <- here::here("graphs", "swd_feb_2020.pdf")
