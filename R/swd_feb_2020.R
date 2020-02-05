@@ -71,7 +71,7 @@ df %>%
     aes(
       x = factor(rowid),
       y = 0.95 * yearly_sunshine_duration,
-      label = glue("{yearly_sunshine_duration} hours"),
+      label = glue("{round(yearly_sunshine_duration, digits = 0)} hours"),
       hjust = hjust
     ),
     color = "#3c3c3c",
