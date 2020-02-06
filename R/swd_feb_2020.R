@@ -110,15 +110,12 @@ df %>%
       label.position = "top",
       title = NULL,
       keywidth = unit(3, "cm"),
+      keyheight = unit(0.2, "cm"),
       nrow = 2
     )
   ) +
   labs(
-    title = "Sunniest places in the world",
-    subtitle = str_wrap(
-      "Do you have winter blues? These are the 15 sunniest places by region in terms of annual sunshine hours.",
-      75
-    ),
+    title = str_wrap("15 places by region in terms of annual sunshine hours", 40),
     caption = "SWD challenge: FEB 2020 (barplot)\nData Source: Wikipedia (https://en.m.wikipedia.org/wiki/List_of_cities_by_sunshine_duration)\nVisualization: @philmassicotte"
   ) +
   theme(
@@ -133,7 +130,7 @@ df %>%
     legend.background = element_rect(fill = "#3c3c3c"),
     legend.key = element_rect(color = "#3c3c3c"),
     legend.text = element_text(color = "white", face = "bold"),
-    legend.margin = margin(t = unit(-30, "cm")),
+    legend.margin = margin(t = unit(-30, "cm"), b = unit(10, "cm")),
     plot.title = element_text(
       color = "white",
       family = "Sofadi One",
