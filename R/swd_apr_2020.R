@@ -77,7 +77,7 @@ df %>%
   labs(
     y = "Proportion of cases",
     x = NULL,
-    title = "COVID-19 relative cases in the Word",
+    title = "COVID-19 relative cases in the World",
     caption = "SWD challenge: April 2020 (area graphs)\nData Source: https://datahub.io\nVisualization: @philmassicotte"
   ) +
   scale_fill_manual(
