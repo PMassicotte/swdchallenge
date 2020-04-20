@@ -27,8 +27,8 @@ lab <- tibble(
     "WHO announced a name for the new coronavirus disease: COVID-19",
     "The outbreak was declared a Public Health Emergency of International Concern",
     "Coronavirus outbreak officially declared a pandemic",
-    "One milion cases repported",
-    "Two milions cases repported"
+    "One milion cases reported",
+    "Two milions cases reported"
   )
 )
 
